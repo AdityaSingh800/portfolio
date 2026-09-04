@@ -1,0 +1,202 @@
+/* =========================
+   BASIC RESET
+========================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+/* =========================
+   BODY
+========================= */
+
+body {
+
+    font-family: Arial, sans-serif;
+
+    line-height: 1.6;
+
+}
+
+
+/* =========================
+   ABOUT SECTION
+========================= */
+
+.about {
+
+    width: 90%;
+
+    max-width: 1100px;
+
+    min-height: 100vh;
+
+    margin: auto;
+
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 80px;
+
+    align-items: center;
+
+}
+
+
+/* =========================
+   SMALL TITLE
+========================= */
+
+.small-title {
+
+    font-size: 0.9rem;
+
+    font-weight: bold;
+
+    letter-spacing: 2px;
+
+    margin-bottom: 10px;
+
+}
+
+
+/* =========================
+   ABOUT TEXT
+========================= */
+
+.about-text h1 {
+
+    font-size: 3rem;
+
+    margin-bottom: 20px;
+
+}
+
+
+.about-text p:not(.small-title) {
+
+    margin-bottom: 20px;
+
+    color: #444;
+
+}
+
+
+/* =========================
+   SKILLS
+========================= */
+
+.skills h2 {
+
+    font-size: 1.5rem;
+
+    margin-bottom: 30px;
+
+}
+
+
+/* =========================
+   INDIVIDUAL SKILL
+========================= */
+
+.skill {
+
+    margin-bottom: 25px;
+
+}
+
+
+/* =========================
+   SKILL INFORMATION
+========================= */
+
+.skill-info {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    margin-bottom: 8px;
+
+}
+
+
+/* =========================
+   SKILL BAR
+========================= */
+
+.skill-bar {
+
+    width: 100%;
+
+    height: 10px;
+
+    background-color: #ddd;
+
+    border-radius: 10px;
+
+    
+
+}
+
+
+/* =========================
+   PROGRESS
+========================= */
+
+.skill-progress {
+
+    height: 100%;
+
+    background-color: black;
+
+    border-radius: 10px;
+
+}
+
+
+/* Different skill levels */
+
+.html {
+    width: 90%;
+}
+
+.css {
+    width: 70%;
+}
+
+.javascript {
+    width: 40%;
+}
+.github{
+    width:10%;
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 768px) {
+
+    .about {
+
+        grid-template-columns: 1fr;
+
+        gap: 50px;
+
+        padding: 60px 0;
+
+    }
+
+    .about-text h1 {
+
+        font-size: 2.5rem;
+
+    }
+
+}

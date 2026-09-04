@@ -1,0 +1,348 @@
+/* =========================
+   RESET
+========================= */
+
+* {
+
+    margin: 0;
+
+    padding: 0;
+
+    box-sizing: border-box;
+
+}
+
+
+/* =========================
+   BODY
+========================= */
+
+body {
+
+    font-family: Arial, sans-serif;
+
+    color: #111;
+
+    background-color: #f5f5f5;
+
+}
+
+
+/* =========================
+   CONTACT
+========================= */
+
+.contact {
+
+    width: 90%;
+
+    max-width: 1100px;
+
+    margin: auto;
+
+    padding: 100px 0;
+
+}
+
+
+/* =========================
+   HEADING
+========================= */
+
+.contact-heading {
+
+    text-align: center;
+
+    margin-bottom: 50px;
+
+}
+
+
+.contact-heading p {
+
+    font-size: 0.9rem;
+
+    font-weight: bold;
+
+    letter-spacing: 2px;
+
+    margin-bottom: 10px;
+
+}
+
+
+.contact-heading h1 {
+
+    font-size: 3rem;
+
+    margin-bottom: 15px;
+
+}
+
+
+.contact-heading span {
+
+    color: #555;
+
+}
+
+
+/* =========================
+   CONTACT CONTAINER
+========================= */
+
+.contact-container {
+
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 60px;
+
+    align-items: start;
+
+}
+
+
+/* =========================
+   CONTACT INFO
+========================= */
+
+.contact-info h2 {
+
+    font-size: 1.8rem;
+
+    margin-bottom: 20px;
+
+}
+
+
+.contact-info > p {
+
+    color: #555;
+
+    line-height: 1.7;
+
+    margin-bottom: 30px;
+
+}
+
+
+/* =========================
+   CONTACT DETAILS
+========================= */
+
+.contact-details p {
+
+    margin-bottom: 15px;
+
+}
+
+
+/* =========================
+   FORM
+========================= */
+
+.contact-form {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 20px;
+
+}
+
+
+/* =========================
+   FORM GROUP
+========================= */
+
+.form-group {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 8px;
+
+}
+
+
+/* =========================
+   LABEL
+========================= */
+
+label {
+
+    font-weight: bold;
+
+}
+
+
+/* =========================
+   INPUT + TEXTAREA
+========================= */
+
+input,
+textarea {
+
+    width: 100%;
+
+    padding: 12px;
+
+    border: 1px solid #aaa;
+
+    border-radius: 8px;
+
+    font-family: inherit;
+
+    font-size: 1rem;
+
+}
+
+
+/* =========================
+   FOCUS
+========================= */
+
+input:focus,
+textarea:focus {
+
+    outline: none;
+
+    border: 2px solid black;
+
+}
+
+
+/* =========================
+   TEXTAREA
+========================= */
+
+textarea {
+
+    resize: vertical;
+
+}
+
+
+/* =========================
+   BUTTON
+========================= */
+
+button {
+
+    padding: 13px 20px;
+
+    border: 2px solid black;
+
+    border-radius: 8px;
+
+    background-color: black;
+
+    color: white;
+
+    font-size: 1rem;
+
+    cursor: pointer;
+
+    transition: 0.3s ease;
+
+}
+
+
+/* =========================
+   BUTTON HOVER
+========================= */
+
+button:hover {
+
+    transform: translateY(-3px);
+
+    opacity: 0.85;
+
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+.footer {
+
+    padding: 30px 5%;
+
+    border-top: 1px solid #ccc;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap: 20px;
+
+}
+
+
+/* =========================
+   SOCIAL LINKS
+========================= */
+
+.social-links {
+
+    display: flex;
+
+    gap: 20px;
+
+}
+
+
+.social-links a {
+
+    color: black;
+
+    text-decoration: none;
+
+}
+
+
+.social-links a:hover {
+
+    text-decoration: underline;
+
+}
+
+
+/* =========================
+   TABLET / MOBILE
+========================= */
+
+@media (max-width: 768px) {
+
+    .contact-container {
+
+        grid-template-columns: 1fr;
+
+        gap: 50px;
+
+    }
+
+
+    .contact-heading h1 {
+
+        font-size: 2.5rem;
+
+    }
+
+
+    .footer {
+
+        flex-direction: column;
+
+        text-align: center;
+
+    }
+
+}
