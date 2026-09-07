@@ -2,6 +2,57 @@ let cityInput = document.getElementById("cityInput");
 let searchButton = document.getElementById("searchButton");
 let weatherResult = document.getElementById("weatherResult");
 
+function getWeatherDescription(code) {
+
+    if (code === 0) {
+        return "Clear sky ☀️";
+    }
+
+    else if (code === 1) {
+        return "Mainly clear 🌤️";
+    }
+
+    else if (code === 2) {
+        return "Partly cloudy ⛅";
+    }
+
+    else if (code === 3) {
+        return "Overcast ☁️";
+    }
+
+    else if (code === 45 || code === 48) {
+        return "Foggy 🌫️";
+    }
+
+    else if (code >= 51 && code <= 57) {
+        return "Drizzle 🌦️";
+    }
+
+    else if (code >= 61 && code <= 67) {
+        return "Rainy 🌧️";
+    }
+
+    else if (code >= 71 && code <= 77) {
+        return "Snowy ❄️";
+    }
+
+    else if (code >= 80 && code <= 82) {
+        return "Rain showers 🌧️";
+    }
+
+    else if (code === 85 || code === 86) {
+        return "Snow showers 🌨️";
+    }
+
+    else if (code >= 95 && code <= 99) {
+        return "Thunderstorm ⛈️";
+    }
+
+    else {
+        return "Unknown weather";
+    }
+}
+
 
 async function getWeather() {
 
@@ -21,7 +72,7 @@ async function getWeather() {
             "Loading...";
 
 
-        // Get city coordinates
+        // Get city coordinates from api
         let locationResponse = await fetch(
             `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(city)}&count=1`
         );
@@ -54,7 +105,7 @@ async function getWeather() {
         let longitude = location.longitude;
 
 
-        // Get weather
+        // Get weather from api
         let weatherResponse = await fetch(
             `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,relative_humidity_2m,weather_code&timezone=auto`
         );
@@ -74,7 +125,9 @@ async function getWeather() {
         let currentWeather =
             weatherData.current;
 
-
+        let description =
+            getWeatherDescription(currentWeather.weather_code);
+        
         weatherResult.innerHTML = `
 
             <h2>${location.name}</h2>
@@ -90,8 +143,8 @@ async function getWeather() {
             </p>
 
             <p>
-                Weather Code:
-                ${currentWeather.weather_code}
+                
+                ${description}
             </p>
 
         `;
