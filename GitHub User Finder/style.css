@@ -1,0 +1,200 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+
+    font-family: Arial, sans-serif;
+
+    background: #f2f2f2;
+
+    display: flex;
+
+    justify-content: center;
+
+    min-height: 100vh;
+}
+
+.container {
+    width: 90%;
+
+    max-width: 700px;
+
+    margin: 40px 0;
+
+    background: white;
+
+    padding: 30px;
+
+    border-radius: 15px;
+
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+
+    margin-bottom: 25px;
+}
+
+.search-box {
+    display: flex;
+
+    gap: 10px;
+}
+
+#usernameInput {
+    flex: 1;
+
+    padding: 12px;
+
+    border: 1px solid #ccc;
+
+    border-radius: 8px;
+
+    font-size: 16px;
+}
+
+#searchButton {
+    padding: 12px 20px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background: #333;
+
+    color: white;
+
+    cursor: pointer;
+}
+
+#searchButton:hover {
+    opacity: 0.8;
+}
+
+#profile {
+    margin-top: 30px;
+
+    text-align: center;
+}
+
+.profile-image {
+    width: 120px;
+
+    height: 120px;
+
+    border-radius: 50%;
+
+    object-fit: cover;
+}
+
+.username {
+    color: #666;
+}
+
+.stats {
+    display: flex;
+
+    justify-content: space-around;
+
+    margin: 25px 0;
+}
+
+.stat {
+    text-align: center;
+}
+
+.stat strong {
+    display: block;
+
+    font-size: 20px;
+}
+
+.profile-link {
+    display: inline-block;
+
+    padding: 10px 20px;
+
+    background: #333;
+
+    color: white;
+
+    text-decoration: none;
+
+    border-radius: 8px;
+}
+
+hr {
+    margin: 30px 0;
+
+    border: none;
+
+    border-top: 1px solid #ddd;
+}
+
+#repoSearch {
+    width: 100%;
+
+    padding: 12px;
+
+    border: 1px solid #ccc;
+
+    border-radius: 8px;
+
+    font-size: 16px;
+
+    margin-bottom: 10px;
+}
+
+#repoCount {
+    color: #666;
+}
+
+.repository {
+    padding: 15px;
+
+    margin-top: 15px;
+
+    border: 1px solid #ddd;
+
+    border-radius: 10px;
+
+    background: #fafafa;
+}
+
+.repository h3 {
+    margin-top: 0;
+}
+
+.repository a {
+    text-decoration: none;
+
+    font-weight: bold;
+}
+
+.repository:hover {
+    background: #f0f0f0;
+}
+
+@media (max-width: 500px) {
+
+    .container {
+        padding: 20px;
+    }
+
+    .search-box {
+        flex-direction: column;
+    }
+
+    #searchButton {
+        width: 100%;
+    }
+
+    .stats {
+        flex-direction: column;
+
+        gap: 15px;
+    }
+}

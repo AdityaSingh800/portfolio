@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>GitHub Explorer</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>GitHub Explorer 🔎</h1>
+
+        <div class="search-box">
+
+            <input
+                id="usernameInput"
+                type="text"
+                placeholder="Enter GitHub username"
+            >
+
+            <button id="searchButton">
+                Search
+            </button>
+
+        </div>
+
+        <div id="profile"></div>
+
+        <hr>
+
+        <div id="repositorySection">
+
+            <h2>Repositories</h2>
+
+            <input
+                id="repoSearch"
+                type="text"
+                placeholder="Search repositories..."
+            >
+            <button id="javascriptButton">JavaScript Repositories</button>
+
+            <button id="allReposButton">
+                All Repositories
+            </button>
+            <p id="repoCount"></p>
+
+            <div id="repositories"></div>
+
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
