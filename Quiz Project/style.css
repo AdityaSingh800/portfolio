@@ -4,11 +4,15 @@
 
 body {
     margin: 0;
+
     font-family: Arial, sans-serif;
+
     background: #f2f2f2;
 
     display: flex;
+
     justify-content: center;
+
     align-items: center;
 
     min-height: 100vh;
@@ -16,6 +20,7 @@ body {
 
 .quiz-container {
     width: 90%;
+
     max-width: 600px;
 
     background: white;
@@ -33,6 +38,14 @@ h1 {
 
 #questionNumber {
     color: #666;
+}
+
+#timer {
+    font-size: 18px;
+
+    font-weight: bold;
+
+    text-align: right;
 }
 
 #question {
@@ -57,42 +70,21 @@ h1 {
     cursor: pointer;
 
     text-align: left;
+
+    font-size: 16px;
 }
 
-.option:hover {
+.option:hover:not(:disabled) {
     background: #e5e5e5;
-}
-
-#nextButton {
-    margin-top: 15px;
-
-    padding: 12px 25px;
-
-    border: none;
-
-    border-radius: 8px;
-
-    background: #333;
-
-    color: white;
-
-    cursor: pointer;
-}
-
-#nextButton:hover {
-    opacity: 0.8;
-}
-
-#result {
-    font-size: 18px;
-    font-weight: bold;
 }
 
 .option:disabled {
     cursor: not-allowed;
+
     opacity: 0.9;
 }
 
+#nextButton,
 #restartButton {
     margin-top: 15px;
 
@@ -107,8 +99,32 @@ h1 {
     color: white;
 
     cursor: pointer;
+
+    font-size: 15px;
 }
 
+#nextButton:hover,
 #restartButton:hover {
     opacity: 0.8;
+}
+
+#result {
+    font-size: 18px;
+
+    font-weight: bold;
+}
+
+@media (max-width: 500px) {
+
+    .quiz-container {
+        padding: 20px;
+    }
+
+    h1 {
+        font-size: 25px;
+    }
+
+    #question {
+        font-size: 20px;
+    }
 }
