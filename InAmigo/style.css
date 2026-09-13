@@ -1058,6 +1058,12 @@ footer > p {
 
 @media (max-width: 900px) {
 
+    .contact-container {
+
+        grid-template-columns: 1fr;
+
+    }
+
     .navbar nav {
         display: none;
     }
