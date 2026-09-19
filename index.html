@@ -1,534 +1,1175 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="en" class="scroll-smooth bg-[#060606] text-[#e5e5e5]">
 <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ADITYA© — Development Partner &amp; Software Engineering Intern</title>
+  <meta name="description" content="Development across the board. Editorial portfolio of Aditya — Computer Applications scholar, former frontend intern at InAmigo Foundation, and reactive web engineer." />
 
-    <meta charset="UTF-8">
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            noir: {
+              950: '#000000',
+              900: '#060606',
+              850: '#0a0a0a',
+              800: '#111111',
+              700: '#1a1a1a',
+              600: '#262626',
+              500: '#404040',
+              400: '#737373',
+              300: '#a3a3a3',
+              200: '#d4d4d4',
+              100: '#f5f5f5'
+            },
+            accent: {
+              lime: '#c8f53c',
+              emerald: '#10b981',
+              silver: '#e2e8f0'
+            }
+          },
+          fontFamily: {
+            display: ['"Space Grotesk"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+            sans: ['"Inter"', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Google Fonts: Space Grotesk, JetBrains Mono & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 
-    <title>Aditya | Developer Portfolio</title>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
 
-    <link rel="stylesheet" href="complete.css">
+  <style>
+    /* Custom Selection & Minimalist Scrollbar */
+    ::selection {
+      background-color: #ffffff;
+      color: #000000;
+    }
+    ::-webkit-scrollbar {
+      width: 4px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #060606;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #262626;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #404040;
+    }
 
+    /* Crisp Hairline Borders */
+    .border-hairline {
+      border-color: rgba(255, 255, 255, 0.09);
+    }
+    .border-b-hairline {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .border-t-hairline {
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    /* Custom Smooth Cursor */
+    @media (pointer: fine) {
+      body {
+        cursor: crosshair;
+      }
+      a, button, [role="button"] {
+        cursor: pointer;
+      }
+    }
+
+    /* Floating Image Follower for Project Roster */
+    #project-preview-follower {
+      pointer-events: none;
+      transform: translate(-50%, -50%);
+      transition: opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1), transform 0.12s ease-out;
+      will-change: transform, opacity;
+    }
+
+    /* Custom Cursor Follower */
+    #cursor-dot {
+      pointer-events: none;
+      transform: translate(-50%, -50%);
+      transition: width 0.2s ease, height 0.2s ease, background-color 0.2s ease, opacity 0.2s ease;
+      will-change: transform;
+    }
+
+    /* Marquee ticker animation */
+    @keyframes marquee {
+      0% { transform: translateX(0%); }
+      100% { transform: translateX(-50%); }
+    }
+    .animate-marquee {
+      display: flex;
+      width: 200%;
+      animation: marquee 32s linear infinite;
+    }
+    .animate-marquee:hover {
+      animation-play-state: paused;
+    }
+  </style>
 </head>
 
-<body>
+<body class="bg-[#060606] text-[#e5e5e5] font-sans antialiased overflow-x-hidden selection:bg-white selection:text-black">
 
-    <!-- =========================
-         NAVBAR
-    ========================== -->
+  <div id="cursor-dot" class="fixed top-0 left-0 z-[9999] w-2 h-2 rounded-full bg-white opacity-80 pointer-events-none hidden md:block"></div>
 
-    <nav class="navbar">
+  <!-- Dynamic Image Follower Box (Ingamana signature feature) -->
+  <div id="project-preview-follower" class="fixed top-0 left-0 z-[70] w-[340px] h-[220px] rounded-lg overflow-hidden border border-white/20 bg-noir-900 shadow-2xl opacity-0 hidden pointer-events-none transition-opacity duration-200">
+    <img id="preview-follower-img" src="" alt="Project Preview" class="w-full h-full object-cover grayscale contrast-125 transition-transform duration-500 scale-105" />
+    <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent"></div>
+    <div class="absolute bottom-3 left-3 right-3 flex items-center justify-between text-[11px] font-mono text-white">
+      <span id="preview-follower-title" class="font-bold tracking-tight uppercase"></span>
+      <span id="preview-follower-tech" class="text-zinc-400"></span>
+    </div>
+  </div>
 
-        <div class="logo">
-            ADITYA
+  <header class="sticky top-0 z-50 w-full bg-[#060606]/90 backdrop-blur-md border-b-hairline transition-colors">
+    <div class="max-w-[1720px] mx-auto px-4 sm:px-8 py-4 flex items-center justify-between gap-4 text-xs font-mono">
+      
+      <!-- Brand & Trademark -->
+      <div class="flex items-center gap-6">
+        <a href="#hero" class="flex items-center gap-2 group text-white tracking-widest font-semibold font-display text-sm sm:text-base">
+          <span>ADITYA<span class="text-accent-lime font-mono text-xs ml-0.5">©</span></span>
+          <span class="text-[10px] text-zinc-500 hidden xl:inline font-mono font-normal">/ [STUDIO 2026]</span>
+        </a>
+        <div class="hidden lg:flex items-center gap-2 text-zinc-400">
+          <span class="w-1.5 h-1.5 rounded-full bg-accent-lime animate-pulse"></span>
+          <span>AVAILABLE FOR SOFTWARE INTERNSHIPS</span>
         </div>
+      </div>
 
-        <div class="nav-links">
-
-            <a href="#home">Home</a>
-
-            <a href="#about">About</a>
-
-            <a href="#projects">Projects</a>
-
-            <a href="#contact">Contact</a>
-
+      <!-- Center System Metas -->
+      <div class="hidden md:flex items-center gap-8 text-[11px] text-zinc-400">
+        <div class="flex items-center gap-2">
+          <span class="text-zinc-600">[LOC]</span>
+          <span id="live-time" class="text-zinc-200 font-mono">PATNA 12:06:01 IST</span>
         </div>
+        <div class="flex items-center gap-2">
+          <span class="text-zinc-600">[INDEX]</span>
+          <span class="text-zinc-300">06 WORKS SHIPPED</span>
+        </div>
+      </div>
 
-    </nav>
+      <!-- Navigation & Actions -->
+      <div class="flex items-center gap-4 sm:gap-6">
+        <nav class="hidden sm:flex items-center gap-5 text-xs text-zinc-400 font-mono">
+          <a href="#work" class="hover:text-white transition-colors">WORK [06]</a>
+          <a href="#services" class="hover:text-white transition-colors">SERVICES</a>
+          <a href="#experience" class="hover:text-white transition-colors">TIMELINE</a>
+          <a href="#stack" class="hover:text-white transition-colors">STACK</a>
+        </nav>
 
+        <!-- Audio Toggle Pill -->
+        <button id="audio-toggle-btn" onclick="toggleAudio()" title="Sound FX [Synthesized Web Audio]" class="px-2.5 py-1 rounded border border-white/10 bg-noir-800 text-[11px] font-mono text-zinc-400 hover:text-white hover:border-white/30 transition-all flex items-center gap-1.5">
+          <i data-lucide="volume-2" id="audio-icon" class="w-3.5 h-3.5 text-accent-lime"></i>
+          <span class="hidden sm:inline">SFX</span>
+        </button>
 
-    <!-- =========================
-         HERO
-    ========================== -->
+        <!-- Signature Editorial Contact Button -->
+        <button onclick="toggleContactOverlay(true)" class="px-3 sm:px-4 py-1.5 rounded bg-white text-black font-semibold text-xs font-mono hover:bg-accent-lime hover:text-black transition-all flex items-center gap-1.5 shadow-sm">
+          <span>CONTACT</span>
+          <span class="text-[10px] opacity-60">✕✕</span>
+        </button>
+      </div>
+    </div>
+  </header>
 
-    <section class="hero" id="home">
+  <main class="max-w-[1720px] mx-auto px-4 sm:px-8 space-y-24 sm:space-y-36 pt-10 sm:pt-16 pb-20">
 
-        <div class="hero-content">
+    <section id="hero" class="space-y-12 sm:space-y-16">
+      
+      <!-- Micro Index Indicator -->
+      <div class="flex flex-wrap items-center justify-between gap-4 border-b-hairline pb-4 text-xs font-mono text-zinc-500">
+        <div class="flex items-center gap-3">
+          <span class="text-white font-semibold">[00]</span>
+          <span class="uppercase tracking-widest text-zinc-400">Development Partner &amp; Frontend Intern</span>
+        </div>
+        <div class="flex items-center gap-6">
+          <span>UNDERGRADUATE // BCA DEGREE CANDIDATE</span>
+          <span class="hidden sm:inline">FORMER INTERN @ INAMIGO</span>
+        </div>
+      </div>
 
-            <p class="intro-text">
-                Hello, I'm
+      <!-- Monumental Editorial Headlines -->
+      <div class="space-y-3 sm:space-y-6">
+        <h1 class="text-4xl sm:text-6xl md:text-8xl lg:text-[108px] xl:text-[124px] font-display font-bold tracking-[-0.04em] leading-[0.9] uppercase text-white">
+          Development <br class="hidden sm:block"/>
+          <span class="text-zinc-500 hover:text-white transition-colors duration-300">Across</span> The Board.
+        </h1>
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 pt-6 sm:pt-10 items-end">
+          <div class="lg:col-span-7">
+            <p class="text-xl sm:text-3xl md:text-4xl font-display font-medium text-zinc-300 leading-tight">
+              Full stack, front to back. <br />
+              <span class="text-zinc-500">Engineering reactive web applications, pristine DOM structures, and production-ready digital products.</span>
             </p>
-
-            <h1>Aditya</h1>
-
-            <h2>
-                Computer Applications Student
-            </h2>
-
-            <p class="description">
-                I am learning web development and building
-                responsive websites using HTML, CSS and JavaScript.
+          </div>
+          <div class="lg:col-span-5 flex flex-col justify-between space-y-6 border-t-hairline lg:border-t-0 lg:border-l-hairline pt-6 lg:pt-0 lg:pl-10 text-xs sm:text-sm font-mono text-zinc-400">
+            <p class="leading-relaxed">
+              Available immediately for Software Engineering and Frontend Developer internship opportunities. Equipped with production experience delivering client-facing digital architectures.
             </p>
-
-            <div class="buttons">
-
-                <a href="#projects" class="btn primary">
-                    View Projects
-                </a>
-
-                <a href="#contact" class="btn secondary">
-                    Contact Me
-                </a>
-
+            <div class="flex flex-wrap items-center gap-4 pt-2">
+              <a href="#work" class="inline-flex items-center gap-2 text-white hover:text-accent-lime underline underline-offset-4 font-semibold">
+                <span>EXPLORE WORK [06]</span>
+                <i data-lucide="arrow-down-right" class="w-4 h-4"></i>
+              </a>
+              <a href="https://github.com/AdityaSingh800" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-zinc-400 hover:text-white underline underline-offset-4">
+                <span>GITHUB @AdityaSingh800</span>
+                <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+              </a>
             </div>
-
+          </div>
         </div>
+      </div>
 
-
-        <div class="hero-image">
-
-            <div class="image-placeholder">
-                <img src="my photo.png" alt="Aditya">
-            </div>
-
+      <!-- Live Infinite Marquee Ticker -->
+      <div class="w-full overflow-hidden border-y-hairline py-3.5 bg-noir-850/60 font-mono text-xs uppercase tracking-widest text-zinc-400 select-none">
+        <div class="animate-marquee whitespace-nowrap gap-10">
+          <span>&bull; INAMIGO FOUNDATION INTERN [2026]</span>
+          <span>&bull; JAVASCRIPT (ES6+)</span>
+          <span>&bull; ASYNC REST APIS</span>
+          <span>&bull; RESPONSIVE ARCHITECTURE</span>
+          <span>&bull; TAILWIND CSS</span>
+          <span>&bull; THREE.JS GRAPHICS</span>
+          <span>&bull; CLEAN CODE DISCIPLINE</span>
+          <span>&bull; VERCEL DEPLOYMENT PIPELINES</span>
+          <span>&bull; INAMIGO FOUNDATION INTERN [2026]</span>
+          <span>&bull; JAVASCRIPT (ES6+)</span>
+          <span>&bull; ASYNC REST APIS</span>
+          <span>&bull; RESPONSIVE ARCHITECTURE</span>
+          <span>&bull; TAILWIND CSS</span>
+          <span>&bull; THREE.JS GRAPHICS</span>
+          <span>&bull; CLEAN CODE DISCIPLINE</span>
+          <span>&bull; VERCEL DEPLOYMENT PIPELINES</span>
         </div>
-
+      </div>
     </section>
 
+    <section id="work" class="space-y-8 scroll-mt-24">
+      
+      <!-- Section Header -->
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between border-b-hairline pb-4 gap-4">
+        <div>
+          <span class="text-xs font-mono text-zinc-500 block mb-1">[01] // PORTFOLIO ROSTER</span>
+          <h2 class="text-3xl sm:text-5xl font-display font-bold uppercase tracking-tight text-white">Selected Works</h2>
+        </div>
+        <div class="text-xs font-mono text-zinc-400 flex items-center gap-6">
+          <span class="hidden md:inline">[HOVER ROW FOR PREVIEW // CLICK FOR SPECS]</span>
+          <span>ALL PROJECTS (6)</span>
+        </div>
+      </div>
 
-    <!-- =========================
-         ABOUT + SKILLS
-    ========================== -->
-
-    <section class="about" id="about">
-
-        <div class="about-text">
-
-            <p class="small-title">
-                ABOUT ME
-            </p>
-
-            <h2>
-                Who I Am
-            </h2>
-
-            <p>
-                I am a Computer Applications student interested
-                in web development and software development.
-            </p>
-
-            <p>
-                I am currently learning HTML, CSS and JavaScript
-                and building projects to improve my development skills.
-            </p>
-
+      <!-- Multi-Column Project Table (Ingamana signature layout) -->
+      <div class="divide-y divide-white/10 border-b-hairline font-mono text-xs sm:text-sm">
+        
+        <!-- Table Column Headers -->
+        <div class="grid grid-cols-12 py-3 text-[11px] text-zinc-500 uppercase tracking-wider font-semibold">
+          <div class="col-span-1 hidden sm:block">INDEX</div>
+          <div class="col-span-6 sm:col-span-5">PROJECT / CLIENT</div>
+          <div class="col-span-4 hidden md:block">SCOPE / CAPABILITIES</div>
+          <div class="col-span-3 sm:col-span-2 text-right">YEAR / LINK</div>
         </div>
 
-
-        <div class="skills">
-
-            <p class="small-title">
-                MY SKILLS
-            </p>
-
-            <h2>
-                Technologies
-            </h2>
-
-
-            <div class="skill">
-
-                <div class="skill-info">
-
-                    <span>HTML</span>
-
-                </div>
-
-                <div class="skill-bar">
-
-                    <div class="skill-progress html"></div>
-
-                </div>
-
-            </div>
-
-
-            <div class="skill">
-
-                <div class="skill-info">
-
-                    <span>CSS</span>
-
-                </div>
-
-                <div class="skill-bar">
-
-                    <div class="skill-progress css"></div>
-
-                </div>
-
-            </div>
-
-
-            <div class="skill">
-
-                <div class="skill-info">
-
-                    <span>JavaScript</span>
-
-                </div>
-
-                <div class="skill-bar">
-
-                    <div class="skill-progress javascript"></div>
-
-                </div>
-
-            </div>
-
+        <!-- Project Row 01: InAmigo -->
+        <div class="project-row group grid grid-cols-12 py-6 sm:py-8 items-center cursor-pointer transition-all duration-200 hover:bg-white/5 px-2 -mx-2 rounded-sm"
+             data-title="InAmigo Foundation"
+             data-tech="HTML5, CSS3, Responsive UI"
+             data-img="https://images.unsplash.com/photo-1593113598332-cd288d649433?q=80&w=900&auto=format&fit=crop"
+             data-id="inamigo"
+             onclick="openProjectModal('inamigo')">
+          <div class="col-span-1 hidden sm:block text-zinc-500 group-hover:text-accent-lime transition-colors">[01]</div>
+          <div class="col-span-6 sm:col-span-5">
+            <h3 class="text-base sm:text-xl md:text-2xl font-display font-bold uppercase text-white group-hover:text-accent-lime group-hover:translate-x-2 transition-all duration-200">
+              InAmigo Foundation
+            </h3>
+            <span class="text-xs text-zinc-400 font-mono block mt-1">Official NGO Digital Platform &amp; Community Portal</span>
+          </div>
+          <div class="col-span-4 hidden md:block text-xs text-zinc-400">
+            Frontend Architecture, Mobile Optimization, Accessibility
+          </div>
+          <div class="col-span-6 sm:col-span-2 text-right flex items-center justify-end gap-2 text-zinc-400 group-hover:text-white">
+            <span class="text-[11px] text-zinc-500 hidden sm:inline">[../2026]</span>
+            <span class="underline underline-offset-4 text-xs font-semibold">VIEW SPECS →</span>
+          </div>
         </div>
 
+        <!-- Project Row 02: GitHub Finder -->
+        <div class="project-row group grid grid-cols-12 py-6 sm:py-8 items-center cursor-pointer transition-all duration-200 hover:bg-white/5 px-2 -mx-2 rounded-sm"
+             data-title="GitHub Dev Finder"
+             data-tech="Octokit API, Async JS, Dynamic Cards"
+             data-img="https://images.unsplash.com/photo-1618401471353-b98aedd04e11?q=80&w=900&auto=format&fit=crop"
+             data-id="githubfinder"
+             onclick="openProjectModal('githubfinder')">
+          <div class="col-span-1 hidden sm:block text-zinc-500 group-hover:text-accent-lime transition-colors">[02]</div>
+          <div class="col-span-6 sm:col-span-5">
+            <h3 class="text-base sm:text-xl md:text-2xl font-display font-bold uppercase text-white group-hover:text-accent-lime group-hover:translate-x-2 transition-all duration-200">
+              GitHub Dev Finder
+            </h3>
+            <span class="text-xs text-zinc-400 font-mono block mt-1">Real-time Profile &amp; Repository Intelligence Tool</span>
+          </div>
+          <div class="col-span-4 hidden md:block text-xs text-zinc-400">
+            REST API Consumption, Debounced Search, DOM Templating
+          </div>
+          <div class="col-span-6 sm:col-span-2 text-right flex items-center justify-end gap-2 text-zinc-400 group-hover:text-white">
+            <span class="text-[11px] text-zinc-500 hidden sm:inline">[../2026]</span>
+            <span class="underline underline-offset-4 text-xs font-semibold">VIEW SPECS →</span>
+          </div>
+        </div>
+
+        <!-- Project Row 03: Weather Radar -->
+        <div class="project-row group grid grid-cols-12 py-6 sm:py-8 items-center cursor-pointer transition-all duration-200 hover:bg-white/5 px-2 -mx-2 rounded-sm"
+             data-title="Meteorological Forecast App"
+             data-tech="OpenWeather API, Dynamic Themes, Async"
+             data-img="https://images.unsplash.com/photo-1592210454359-9043f067919b?q=80&w=900&auto=format&fit=crop"
+             data-id="weather"
+             onclick="openProjectModal('weather')">
+          <div class="col-span-1 hidden sm:block text-zinc-500 group-hover:text-accent-lime transition-colors">[03]</div>
+          <div class="col-span-6 sm:col-span-5">
+            <h3 class="text-base sm:text-xl md:text-2xl font-display font-bold uppercase text-white group-hover:text-accent-lime group-hover:translate-x-2 transition-all duration-200">
+              Weather Radar Core
+            </h3>
+            <span class="text-xs text-zinc-400 font-mono block mt-1">Real-time Atmospheric &amp; Geospatial Forecast Engine</span>
+          </div>
+          <div class="col-span-4 hidden md:block text-xs text-zinc-400">
+            Async / Await, Defensive Error Boundaries, SVG Weather Matrix
+          </div>
+          <div class="col-span-6 sm:col-span-2 text-right flex items-center justify-end gap-2 text-zinc-400 group-hover:text-white">
+            <span class="text-[11px] text-zinc-500 hidden sm:inline">[../2026]</span>
+            <span class="underline underline-offset-4 text-xs font-semibold">VIEW SPECS →</span>
+          </div>
+        </div>
+
+        <!-- Project Row 04: Task Matrix -->
+        <div class="project-row group grid grid-cols-12 py-6 sm:py-8 items-center cursor-pointer transition-all duration-200 hover:bg-white/5 px-2 -mx-2 rounded-sm"
+             data-title="Task Matrix Suite"
+             data-tech="LocalStorage CRUD, State Engine"
+             data-img="https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?q=80&w=900&auto=format&fit=crop"
+             data-id="todo"
+             onclick="openProjectModal('todo')">
+          <div class="col-span-1 hidden sm:block text-zinc-500 group-hover:text-accent-lime transition-colors">[04]</div>
+          <div class="col-span-6 sm:col-span-5">
+            <h3 class="text-base sm:text-xl md:text-2xl font-display font-bold uppercase text-white group-hover:text-accent-lime group-hover:translate-x-2 transition-all duration-200">
+              Task Matrix &amp; To-Do
+            </h3>
+            <span class="text-xs text-zinc-400 font-mono block mt-1">Persistent Browser Task Management &amp; State Engine</span>
+          </div>
+          <div class="col-span-4 hidden md:block text-xs text-zinc-400">
+            Client-Side Persistence, Event Delegation, DOM Sanitization
+          </div>
+          <div class="col-span-6 sm:col-span-2 text-right flex items-center justify-end gap-2 text-zinc-400 group-hover:text-white">
+            <span class="text-[11px] text-zinc-500 hidden sm:inline">[../2025]</span>
+            <span class="underline underline-offset-4 text-xs font-semibold">VIEW SPECS →</span>
+          </div>
+        </div>
+
+        <!-- Project Row 05: JS Quiz -->
+        <div class="project-row group grid grid-cols-12 py-6 sm:py-8 items-center cursor-pointer transition-all duration-200 hover:bg-white/5 px-2 -mx-2 rounded-sm"
+             data-title="JavaScript Quiz Master"
+             data-tech="Vanilla JS, State Machine, Timers"
+             data-img="https://images.unsplash.com/photo-1606326608606-aa0b62935f2b?q=80&w=900&auto=format&fit=crop"
+             data-id="quiz"
+             onclick="openProjectModal('quiz')">
+          <div class="col-span-1 hidden sm:block text-zinc-500 group-hover:text-accent-lime transition-colors">[05]</div>
+          <div class="col-span-6 sm:col-span-5">
+            <h3 class="text-base sm:text-xl md:text-2xl font-display font-bold uppercase text-white group-hover:text-accent-lime group-hover:translate-x-2 transition-all duration-200">
+              JavaScript Quiz Master
+            </h3>
+            <span class="text-xs text-zinc-400 font-mono block mt-1">Kinetic Technical Assessment &amp; Timed Evaluation Suite</span>
+          </div>
+          <div class="col-span-4 hidden md:block text-xs text-zinc-400">
+            Dynamic State Shuffling, Scoring Metrics, Interval Logic
+          </div>
+          <div class="col-span-6 sm:col-span-2 text-right flex items-center justify-end gap-2 text-zinc-400 group-hover:text-white">
+            <span class="text-[11px] text-zinc-500 hidden sm:inline">[../2025]</span>
+            <span class="underline underline-offset-4 text-xs font-semibold">VIEW SPECS →</span>
+          </div>
+        </div>
+
+        <!-- Project Row 06: Portfolio Core -->
+        <div class="project-row group grid grid-cols-12 py-6 sm:py-8 items-center cursor-pointer transition-all duration-200 hover:bg-white/5 px-2 -mx-2 rounded-sm"
+             data-title="Aditya Digital Portfolio"
+             data-tech="Editorial Design, Web Audio, Vercel"
+             data-img="https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?q=80&w=900&auto=format&fit=crop"
+             data-id="portfolio"
+             onclick="openProjectModal('portfolio')">
+          <div class="col-span-1 hidden sm:block text-zinc-500 group-hover:text-accent-lime transition-colors">[06]</div>
+          <div class="col-span-6 sm:col-span-5">
+            <h3 class="text-base sm:text-xl md:text-2xl font-display font-bold uppercase text-white group-hover:text-accent-lime group-hover:translate-x-2 transition-all duration-200">
+              Editorial Portfolio Core
+            </h3>
+            <span class="text-xs text-zinc-400 font-mono block mt-1">Minimalist Black &amp; White Avant-Garde Developer Platform</span>
+          </div>
+          <div class="col-span-4 hidden md:block text-xs text-zinc-400">
+            Awwwards-Caliber Typography, Web Audio SFX, Single-File
+          </div>
+          <div class="col-span-6 sm:col-span-2 text-right flex items-center justify-end gap-2 text-zinc-400 group-hover:text-white">
+            <span class="text-[11px] text-zinc-500 hidden sm:inline">[../2026]</span>
+            <span class="underline underline-offset-4 text-xs font-semibold">VIEW SPECS →</span>
+          </div>
+        </div>
+
+      </div>
     </section>
 
+    <section id="services" class="space-y-8 scroll-mt-24">
+      
+      <!-- Section Header -->
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between border-b-hairline pb-4 gap-4">
+        <div>
+          <span class="text-xs font-mono text-zinc-500 block mb-1">[02] // DISCIPLINES</span>
+          <h2 class="text-3xl sm:text-5xl font-display font-bold uppercase tracking-tight text-white">Capabilities &amp; Scope</h2>
+        </div>
+        <div class="text-xs font-mono text-zinc-400">
+          WHAT I BRING TO AN INTERNSHIP
+        </div>
+      </div>
 
-    <!-- =========================
-         PROJECTS
-    ========================== -->
-
-    <section class="projects section" id="projects">
-
-        <div class="section-heading">
-
-            <p>MY WORK</p>
-
-            <h2>Projects</h2>
-
-            <span>
-                Projects I've built while learning web development.
-            </span>
-
+      <!-- 5-Column Grid Matrix (Ingamana style) -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 pt-4">
+        
+        <!-- Pillar 01 -->
+        <div class="p-6 rounded-lg border border-hairline bg-noir-850 space-y-4 hover:border-white/30 transition-all flex flex-col justify-between">
+          <div class="space-y-2">
+            <span class="font-mono text-xs text-accent-lime font-bold">[01]</span>
+            <h3 class="font-display text-lg font-bold uppercase text-white">Frontend Architecture</h3>
+            <p class="text-xs text-zinc-400 font-mono leading-relaxed">
+              Crafting semantic HTML5 foundations, modular CSS architectures, and reusable layout components with zero visual degradation.
+            </p>
+          </div>
+          <div class="pt-4 border-t-hairline text-[11px] font-mono text-zinc-500 space-y-1">
+            <p>&bull; HTML5 Semantic Layouts</p>
+            <p>&bull; Modern CSS &amp; Tailwind</p>
+            <p>&bull; Mobile First Responsive</p>
+          </div>
         </div>
 
-
-        <div class="project-grid">
-
-            <article class="project-card">
-
-                <div class="project-image">
-                    InAmigo Internship
-                </div>
-
-                <div class="project-content">
-
-                    <h3>NGO WEBPAGE </h3>
-
-                    <p>
-                        Webpage I created for InAmigo Foundation.
-                    </p>
-
-                    <div class="technologies">
-
-                        <span>HTML</span>
-                        <span>CSS</span>
-                        
-
-                    </div>
-
-                    <a href="InAmigo/index.html">
-                        View Project →
-                    </a>
-
-                </div>
-
-            </article>
-
-            <article class="project-card">
-
-                <div class="project-image">
-                    Project 1
-                </div>
-
-                <div class="project-content">
-
-                    <h3>To-do App</h3>
-
-                    <p>
-                        A to-do app
-                        created using HTML, CSS and javascript.
-                    </p>
-
-                    <div class="technologies">
-
-                        <span>HTML</span>
-                        <span>CSS</span>
-                        <span>JAVASCRIPT</span>
-
-                    </div>
-
-                    <a href="todo.html">
-                        View Project →
-                    </a>
-
-                </div>
-
-            </article>
-
-
-            <article class="project-card">
-
-                <div class="project-image">
-                    Project 2
-                </div>
-
-                <div class="project-content">
-
-                    <h3>Weather App</h3>
-
-                    <p>
-                        A responsive weather app created
-                        using javascript. API integration... 
-                    </p>
-
-                    <div class="technologies">
-
-                        <span>HTML</span>
-                        <span>JAVASCRIPT</span>
-                        <span>CSS</span>
-                        <span>API</span>
-
-                    </div>
-
-                    <a href="weather.html">
-                        View Project →
-                    </a>
-
-                </div>
-
-            </article>
-
-
-            <article class="project-card">
-
-                <div class="project-image">
-                    Project 3 
-                </div>
-
-                <div class="project-content">
-
-                    <h3>JavaScript Quiz</h3>
-
-                    <p>
-                        A functional and responsive quiz 
-                        project.
-                    </p>
-
-                    <div class="technologies">
-
-                        <span>HTML</span>
-
-                        <span>CSS</span>
-
-                        <span>JavaScript</span>
-
-                    </div>
-
-                    <a href="Quiz Project/index.html">
-                        View Project →
-                    </a>
-
-                </div>
-
-            </article>
-
-            <article class="project-card">
-
-                <div class="project-image">
-                    Project 4 
-                </div>
-
-                <div class="project-content">
-
-                    <h3>GitHub User Finder</h3>
-
-                    <p>
-                        A functional and responsive user finder,
-                        that finds the GitHub users and their repos.
-                    </p>
-
-                    <div class="technologies">
-
-                        <span>HTML</span>
-
-                        <span>CSS</span>
-                        <span>API</span>
-                        <span>JavaScript</span>
-
-                    </div>
-
-                    <a href="GitHub User Finder/index.html">
-                        View Project →
-                    </a>
-
-                </div>
-
-            </article>
-
-            <article class="project-card">
-
-                <div class="project-image">
-                    Project 5 
-                </div>
-
-                <div class="project-content">
-
-                    <h3>Personal Portfolio</h3>
-
-                    <p>
-                        A clean and responsive portfolio
-                        page.
-                    </p>
-
-                    <div class="technologies">
-
-                        <span>HTML</span>
-
-                        <span>CSS</span>
-
-                        
-
-                    </div>
-
-                    <a href="index.html">
-                        View Project →
-                    </a>
-
-                </div>
-
-            </article>
-
-
+        <!-- Pillar 02 -->
+        <div class="p-6 rounded-lg border border-hairline bg-noir-850 space-y-4 hover:border-white/30 transition-all flex flex-col justify-between">
+          <div class="space-y-2">
+            <span class="font-mono text-xs text-accent-lime font-bold">[02]</span>
+            <h3 class="font-display text-lg font-bold uppercase text-white">JavaScript &amp; Logic</h3>
+            <p class="text-xs text-zinc-400 font-mono leading-relaxed">
+              Writing clean, modern ES6+ vanilla JavaScript with tight event handling, array transformers, and state isolation.
+            </p>
+          </div>
+          <div class="pt-4 border-t-hairline text-[11px] font-mono text-zinc-500 space-y-1">
+            <p>&bull; ES6+ Modular Syntax</p>
+            <p>&bull; DOM Event Delegation</p>
+            <p>&bull; Client State Engines</p>
+          </div>
         </div>
 
+        <!-- Pillar 03 -->
+        <div class="p-6 rounded-lg border border-hairline bg-noir-850 space-y-4 hover:border-white/30 transition-all flex flex-col justify-between">
+          <div class="space-y-2">
+            <span class="font-mono text-xs text-accent-lime font-bold">[03]</span>
+            <h3 class="font-display text-lg font-bold uppercase text-white">APIs &amp; Asynchronous</h3>
+            <p class="text-xs text-zinc-400 font-mono leading-relaxed">
+              Querying and parsing REST endpoints, debouncing requests, and protecting user interfaces with resilient error fallbacks.
+            </p>
+          </div>
+          <div class="pt-4 border-t-hairline text-[11px] font-mono text-zinc-500 space-y-1">
+            <p>&bull; RESTful Endpoints</p>
+            <p>&bull; Async/Await &amp; Promises</p>
+            <p>&bull; JSON Data Formatting</p>
+          </div>
+        </div>
+
+        <!-- Pillar 04 -->
+        <div class="p-6 rounded-lg border border-hairline bg-noir-850 space-y-4 hover:border-white/30 transition-all flex flex-col justify-between">
+          <div class="space-y-2">
+            <span class="font-mono text-xs text-accent-lime font-bold">[04]</span>
+            <h3 class="font-display text-lg font-bold uppercase text-white">Core Web Vitals</h3>
+            <p class="text-xs text-zinc-400 font-mono leading-relaxed">
+              Prioritizing minimal DOM reflows, instant first contentful paint (FCP), zero layout shifts, and high frame rate interactions.
+            </p>
+          </div>
+          <div class="pt-4 border-t-hairline text-[11px] font-mono text-zinc-500 space-y-1">
+            <p>&bull; Fast Paint Times</p>
+            <p>&bull; Zero CLS Layout Shifts</p>
+            <p>&bull; Lightweight Footprint</p>
+          </div>
+        </div>
+
+        <!-- Pillar 05 -->
+        <div class="p-6 rounded-lg border border-hairline bg-noir-850 space-y-4 hover:border-white/30 transition-all flex flex-col justify-between">
+          <div class="space-y-2">
+            <span class="font-mono text-xs text-accent-lime font-bold">[05]</span>
+            <h3 class="font-display text-lg font-bold uppercase text-white">Git &amp; Deployment</h3>
+            <p class="text-xs text-zinc-400 font-mono leading-relaxed">
+              Disciplined branch workflows, clean semantic commit messaging, and continuous automated production hosting on Vercel.
+            </p>
+          </div>
+          <div class="pt-4 border-t-hairline text-[11px] font-mono text-zinc-500 space-y-1">
+            <p>&bull; Git CLI &amp; GitHub</p>
+            <p>&bull; Vercel CI/CD</p>
+            <p>&bull; Cross-Browser Testing</p>
+          </div>
+        </div>
+
+      </div>
     </section>
 
-
-    <!-- =========================
-         CONTACT
-    ========================== -->
-
-    <section class="contact" id="contact">
-
-        <div class="contact-heading">
-
-            <p>GET IN TOUCH</p>
-
-            <h2>Contact Me</h2>
-
-            <span>
-                Have a project or opportunity? Feel free to reach out.
-            </span>
-
+    <section id="experience" class="space-y-8 scroll-mt-24">
+      
+      <!-- Section Header -->
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between border-b-hairline pb-4 gap-4">
+        <div>
+          <span class="text-xs font-mono text-zinc-500 block mb-1">[03] // TIMELINE</span>
+          <h2 class="text-3xl sm:text-5xl font-display font-bold uppercase tracking-tight text-white">Experience &amp; Track</h2>
         </div>
+        <div class="text-xs font-mono text-zinc-400">
+          DOCUMENTED MILESTONES
+        </div>
+      </div>
 
-
-        <div class="contact-container">
-
-
-            <div class="contact-info">
-
-                <h3>
-                    Let's work together
-                </h3>
-
-                <p>
-                    I'm interested in learning, building projects
-                    and exploring new opportunities.
-                </p>
-
-                <p>
-                    <strong>Email:</strong>
-                    adityanew12id@gmail.com
-                </p>
-
-                <p>
-                    <strong>GitHub:</strong>
-                    AdityaSingh800
-                </p>
-
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        
+        <!-- Left: Experience Record -->
+        <div class="lg:col-span-7 divide-y divide-white/10 border-b-hairline">
+          
+          <!-- Experience Item 01 -->
+          <div class="py-6 space-y-3">
+            <div class="flex items-center justify-between text-xs font-mono">
+              <span class="text-accent-lime font-bold">[INTERNSHIP // COMPLETED]</span>
+              <span class="text-zinc-500">2025 — 2026</span>
             </div>
+            <h3 class="text-2xl font-display font-bold uppercase text-white">InAmigo Foundation</h3>
+            <p class="text-sm font-mono text-zinc-300">Frontend Web Development Intern</p>
+            <p class="text-xs sm:text-sm text-zinc-400 font-mono leading-relaxed pt-1">
+              Collaborated with foundation leads to engineer the public web portal. Refactored HTML5 and CSS structures, optimized mobile device responsiveness, and increased community outreach engagement through clean layout design.
+            </p>
+          </div>
 
-
-            <form class="contact-form">
-
-                <div class="form-group">
-
-                    <label for="name">
-                        Name
-                    </label>
-
-                    <input
-                        type="text"
-                        id="name"
-                        placeholder="Enter your name"
-                    >
-
-                </div>
-
-
-                <div class="form-group">
-
-                    <label for="email">
-                        Email
-                    </label>
-
-                    <input
-                        type="email"
-                        id="email"
-                        placeholder="Enter your email"
-                    >
-
-                </div>
-
-
-                <div class="form-group">
-
-                    <label for="message">
-                        Message
-                    </label>
-
-                    <textarea
-                        id="message"
-                        rows="5"
-                        placeholder="Write your message..."
-                    ></textarea>
-
-                </div>
-
-
-                <button type="submit">
-                    Send Message
-                </button>
-
-            </form>
-
+          <!-- Experience Item 02 -->
+          <div class="py-6 space-y-3">
+            <div class="flex items-center justify-between text-xs font-mono">
+              <span class="text-white font-bold">[ACADEMICS // IN PROGRESS]</span>
+              <span class="text-zinc-500">2023 — 2026</span>
+            </div>
+            <h3 class="text-2xl font-display font-bold uppercase text-white">Bachelor of Computer Applications (BCA)</h3>
+            <p class="text-sm font-mono text-zinc-300">Undergraduate Degree Program</p>
+            <p class="text-xs sm:text-sm text-zinc-400 font-mono leading-relaxed pt-1">
+              Rigorous coursework in Data Structures, Object-Oriented Analysis, Database Management Systems, and Software Engineering. Maintained dedicated personal coding practice with open source repositories.
+            </p>
+          </div>
         </div>
 
+        <!-- Right: Milestones & Stats Callout -->
+        <div class="lg:col-span-5 p-6 sm:p-8 rounded-lg border border-hairline bg-noir-850 space-y-6 flex flex-col justify-between">
+          <div class="space-y-4">
+            <span class="text-xs font-mono text-zinc-500 uppercase tracking-widest">[REPUTATION &amp; STANDARDS]</span>
+            <h3 class="text-2xl font-display font-bold text-white uppercase">Engineered for Technical Impact</h3>
+            <p class="text-xs sm:text-sm font-mono text-zinc-400 leading-relaxed">
+              Every project is constructed with zero tolerance for bloated libraries when clean browser APIs suffice. Ready to integrate into agile engineering sprints on day one.
+            </p>
+          </div>
+
+          <!-- Editorial Metric Badges -->
+          <div class="grid grid-cols-2 gap-4 pt-4 border-t-hairline font-mono">
+            <div>
+              <div class="text-3xl font-bold font-display text-white">100%</div>
+              <div class="text-[10px] text-zinc-500 uppercase mt-0.5">Responsive Viewports</div>
+            </div>
+            <div>
+              <div class="text-3xl font-bold font-display text-accent-lime">06+</div>
+              <div class="text-[10px] text-zinc-500 uppercase mt-0.5">Shipped Code Repos</div>
+            </div>
+            <div>
+              <div class="text-3xl font-bold font-display text-white">60 FPS</div>
+              <div class="text-[10px] text-zinc-500 uppercase mt-0.5">Performance Score</div>
+            </div>
+            <div>
+              <div class="text-3xl font-bold font-display text-white">VERCEL</div>
+              <div class="text-[10px] text-zinc-500 uppercase mt-0.5">Automated CI/CD</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
     </section>
 
+    <section id="stack" class="space-y-8 scroll-mt-24">
+      
+      <!-- Section Header -->
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between border-b-hairline pb-4 gap-4">
+        <div>
+          <span class="text-xs font-mono text-zinc-500 block mb-1">[04] // ENVIRONMENT</span>
+          <h2 class="text-3xl sm:text-5xl font-display font-bold uppercase tracking-tight text-white">Technology Stack</h2>
+        </div>
+        <div class="text-xs font-mono text-zinc-400">
+          LANGUAGES &amp; DEVTOOLS
+        </div>
+      </div>
 
-    <!-- =========================
-         FOOTER
-    ========================== -->
-
-    <footer class="footer">
-
-        <p>
-            © 2026 Aditya
-        </p>
-
-        <div class="social-links">
-
-            <a href="https://github.com/AdityaSingh800">GitHub</a>
-
-            <a href="https://portfolio-aditya-3654.vercel.app/">Vercel</a>
-
+      <!-- Matrix Cards -->
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 font-mono text-xs">
+        <div class="p-4 rounded border border-hairline bg-noir-850 hover:border-white/40 transition-colors">
+          <span class="text-[10px] text-zinc-500 block">[LANG]</span>
+          <span class="font-bold text-white text-sm block mt-2">JavaScript</span>
+          <span class="text-[11px] text-zinc-400">ES6+ Standard</span>
         </div>
 
-    </footer>
+        <div class="p-4 rounded border border-hairline bg-noir-850 hover:border-white/40 transition-colors">
+          <span class="text-[10px] text-zinc-500 block">[MARKUP]</span>
+          <span class="font-bold text-white text-sm block mt-2">HTML5</span>
+          <span class="text-[11px] text-zinc-400">Semantic DOM</span>
+        </div>
 
+        <div class="p-4 rounded border border-hairline bg-noir-850 hover:border-white/40 transition-colors">
+          <span class="text-[10px] text-zinc-500 block">[STYLE]</span>
+          <span class="font-bold text-white text-sm block mt-2">CSS3 / Tailwind</span>
+          <span class="text-[11px] text-zinc-400">Grid &amp; Flexbox</span>
+        </div>
+
+        <div class="p-4 rounded border border-hairline bg-noir-850 hover:border-white/40 transition-colors">
+          <span class="text-[10px] text-zinc-500 block">[GRAPHICS]</span>
+          <span class="font-bold text-white text-sm block mt-2">Three.js</span>
+          <span class="text-[11px] text-zinc-400">WebGL &amp; Shaders</span>
+        </div>
+
+        <div class="p-4 rounded border border-hairline bg-noir-850 hover:border-white/40 transition-colors">
+          <span class="text-[10px] text-zinc-500 block">[PROTOCOL]</span>
+          <span class="font-bold text-white text-sm block mt-2">REST APIs</span>
+          <span class="text-[11px] text-zinc-400">Fetch / Async</span>
+        </div>
+
+        <div class="p-4 rounded border border-hairline bg-noir-850 hover:border-white/40 transition-colors">
+          <span class="text-[10px] text-zinc-500 block">[TOOLING]</span>
+          <span class="font-bold text-white text-sm block mt-2">Git &amp; GitHub</span>
+          <span class="text-[11px] text-zinc-400">Vercel Deploy</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="border-t-hairline pt-16 sm:pt-24 space-y-8">
+      <div class="flex items-center gap-3 font-mono text-xs text-accent-lime">
+        <span class="w-2 h-2 rounded-full bg-accent-lime animate-ping"></span>
+        <span>IMMEDIATE INTERNSHIP INTAKE</span>
+      </div>
+      
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-end">
+        <div class="lg:col-span-8 space-y-4">
+          <h2 class="text-4xl sm:text-6xl md:text-7xl font-display font-bold uppercase tracking-tight text-white leading-none">
+            Let's build something <br />
+            <span class="text-zinc-500 hover:text-white transition-colors">extraordinary</span> together.
+          </h2>
+          <p class="text-sm sm:text-base font-mono text-zinc-400 max-w-xl">
+            Open to engineering teams seeking a dedicated, fast-learning frontend developer. Reach out directly or dispatch a transmission.
+          </p>
+        </div>
+        <div class="lg:col-span-4 flex flex-col items-start lg:items-end gap-4 font-mono text-xs">
+          <button onclick="copyEmail()" class="w-full sm:w-auto px-6 py-4 rounded bg-white text-black font-bold uppercase hover:bg-accent-lime transition-all flex items-center justify-center gap-3">
+            <i data-lucide="copy" class="w-4 h-4"></i>
+            <span>COPY EMAIL ADDRESS</span>
+          </button>
+          <button onclick="toggleContactOverlay(true)" class="w-full sm:w-auto px-6 py-4 rounded border border-white/20 hover:border-white text-white font-bold uppercase transition-all flex items-center justify-center gap-3">
+            <span>OPEN CONTACT DRAWER ✕✕</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="border-t-hairline bg-noir-900 py-10 font-mono text-xs text-zinc-500">
+    <div class="max-w-[1720px] mx-auto px-4 sm:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
+      
+      <div class="flex items-center gap-4">
+        <span class="text-white font-bold font-display">ADITYA©</span>
+        <span>/</span>
+        <span>DEVELOPMENT PARTNER &amp; SOFTWARE INTERN</span>
+      </div>
+
+      <div class="flex items-center gap-6">
+        <a href="https://github.com/AdityaSingh800" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors">GITHUB [AdityaSingh800]</a>
+        <span>/</span>
+        <a href="https://portfolio-aditya-3654.vercel.app/" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors">VERCEL [Live]</a>
+        <span>/</span>
+        <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="hover:text-white transition-colors uppercase">TOP ↑</button>
+      </div>
+
+      <div>
+        <span>ALL RIGHTS RESERVED // 2026</span>
+      </div>
+
+    </div>
+  </footer>
+
+  <div id="contact-overlay" class="fixed inset-0 z-[100] bg-noir-950/95 backdrop-blur-xl hidden flex-col justify-between p-6 sm:p-12 overflow-y-auto animate-in fade-in duration-200">
+    
+    <!-- Overlay Top Bar -->
+    <div class="flex items-center justify-between border-b-hairline pb-6 font-mono text-xs">
+      <div class="flex items-center gap-3">
+        <span class="font-display font-bold text-white text-base">ADITYA©</span>
+        <span class="text-zinc-500">[TRANSMISSION PORTAL]</span>
+      </div>
+      <button onclick="toggleContactOverlay(false)" class="px-3 py-1.5 rounded border border-white/20 hover:border-white text-white font-mono text-xs flex items-center gap-2 transition-colors">
+        <span>CLOSE</span>
+        <span class="text-accent-lime font-bold">✕</span>
+      </button>
+    </div>
+
+    <!-- Overlay Core Content -->
+    <div class="my-auto py-12 max-w-4xl mx-auto w-full space-y-12">
+      <div class="space-y-4">
+        <span class="text-xs font-mono text-accent-lime font-bold">[DIRECT COMMUNICATION]</span>
+        <h2 class="text-3xl sm:text-5xl md:text-6xl font-display font-bold uppercase text-white tracking-tight leading-tight">
+          Dispatch an inquiry or <br />
+          schedule an interview.
+        </h2>
+      </div>
+
+      <!-- Quick Email Pill -->
+      <div class="p-4 rounded border border-white/10 bg-noir-850 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 font-mono text-xs">
+        <div>
+          <span class="text-zinc-500 text-[10px] block">DIRECT INBOX</span>
+          <span class="text-white font-bold text-sm sm:text-base">adityanew12id@gmail.com</span>
+        </div>
+        <button onclick="copyEmail()" class="px-4 py-2 rounded bg-white text-black font-semibold hover:bg-accent-lime transition-all flex items-center gap-2 text-xs">
+          <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+          <span>COPY INBOX ADDRESS</span>
+        </button>
+      </div>
+
+      <!-- Transmission Form -->
+      <form id="contact-form" onsubmit="handleFormSubmit(event)" class="space-y-6 font-mono text-xs">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          <div class="space-y-2">
+            <label class="block text-zinc-400 uppercase">[01] YOUR NAME / ORGANIZATION *</label>
+            <input type="text" required id="form-name" placeholder="E.g., Senior Engineering Director" class="w-full bg-noir-900 border border-white/10 px-4 py-3 text-white focus:outline-none focus:border-white transition-colors" />
+          </div>
+          <div class="space-y-2">
+            <label class="block text-zinc-400 uppercase">[02] YOUR EMAIL *</label>
+            <input type="email" required id="form-email" placeholder="name@company.com" class="w-full bg-noir-900 border border-white/10 px-4 py-3 text-white focus:outline-none focus:border-white transition-colors" />
+          </div>
+        </div>
+
+        <div class="space-y-2">
+          <label class="block text-zinc-400 uppercase">[03] TRANSMISSION DETAILS / SCOPE *</label>
+          <textarea rows="4" required id="form-message" placeholder="Details regarding your team, software internship requirements, or project opportunities..." class="w-full bg-noir-900 border border-white/10 px-4 py-3 text-white focus:outline-none focus:border-white transition-colors resize-none"></textarea>
+        </div>
+
+        <button type="submit" class="w-full py-4 rounded bg-white text-black font-display font-bold text-sm uppercase hover:bg-accent-lime transition-all flex items-center justify-center gap-2">
+          <span>TRANSMIT DISPATCH</span>
+          <i data-lucide="arrow-right" class="w-4 h-4"></i>
+        </button>
+      </form>
+    </div>
+
+    <!-- Overlay Bottom Info -->
+    <div class="border-t-hairline pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-xs text-zinc-500">
+      <div>PATNA, BIHAR, INDIA &bull; OPEN TO REMOTE WORK WORLDWIDE</div>
+      <div class="text-zinc-400">RESPONSE LATENCY: WITHIN 24 HOURS</div>
+    </div>
+  </div>
+
+  <div id="project-modal" class="fixed inset-0 z-[100] bg-noir-950/90 backdrop-blur-xl hidden items-center justify-center p-4">
+    <div class="bg-noir-900 border border-white/15 max-w-3xl w-full p-6 sm:p-10 rounded-lg space-y-6 font-mono relative shadow-2xl animate-in zoom-in-95 duration-150 max-h-[90vh] overflow-y-auto">
+      
+      <!-- Close Button -->
+      <button onclick="closeProjectModal()" class="absolute top-6 right-6 p-2 text-zinc-400 hover:text-white" aria-label="Close modal">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+
+      <div>
+        <span id="modal-idx" class="text-xs text-accent-lime font-bold">[PROJECT SPECIFICATION]</span>
+        <h3 id="modal-title" class="text-2xl sm:text-4xl font-display font-bold uppercase text-white mt-1">Project Name</h3>
+        <p id="modal-tagline" class="text-xs text-zinc-400 mt-1">Scope description</p>
+      </div>
+
+      <!-- Preview Image in Modal -->
+      <div class="w-full h-56 sm:h-72 rounded overflow-hidden border border-white/10 bg-black">
+        <img id="modal-img" src="" alt="Modal Project Preview" class="w-full h-full object-cover grayscale contrast-125" />
+      </div>
+
+      <div class="space-y-3 text-xs sm:text-sm text-zinc-300 leading-relaxed font-sans" id="modal-body">
+        <!-- Injected via JavaScript -->
+      </div>
+
+      <div>
+        <span class="text-[11px] text-zinc-500 uppercase tracking-widest block mb-2 font-mono">CORE TECHNOLOGIES</span>
+        <div id="modal-tags" class="flex flex-wrap gap-2">
+          <!-- Injected via JS -->
+        </div>
+      </div>
+
+      <div class="pt-6 border-t-hairline flex items-center justify-between font-mono text-xs">
+        <button onclick="closeProjectModal()" class="px-4 py-2 border border-white/20 text-zinc-300 hover:text-white rounded">
+          DISMISS [ESC]
+        </button>
+        <a id="modal-action-btn" href="#" target="_blank" rel="noopener noreferrer" class="px-5 py-2 bg-white text-black font-bold uppercase hover:bg-accent-lime transition-all flex items-center gap-2 rounded">
+          <span>VISIT REPO / DEMO</span>
+          <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+  <div id="toast" class="fixed bottom-6 right-6 z-[110] hidden transform transition-all duration-300">
+    <div class="bg-noir-900 border border-white/20 px-5 py-3.5 rounded shadow-2xl flex items-center gap-3 font-mono text-xs">
+      <span class="w-2 h-2 rounded-full bg-accent-lime"></span>
+      <div>
+        <p id="toast-title" class="text-white font-bold">SYSTEM NOTICE</p>
+        <p id="toast-desc" class="text-zinc-400 text-[11px]">Action confirmed.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /* =========================================================
+       1. SYNTHESIZED WEB AUDIO ENGINE (Ingamana subtle haptic clicks)
+       ========================================================= */
+    let audioCtx = null;
+    let sfxEnabled = true;
+
+    function initAudioContext() {
+      if (!audioCtx) {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        if (AudioContext) {
+          audioCtx = new AudioContext();
+        }
+      }
+      if (audioCtx && audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+    }
+
+    function playSound(type) {
+      if (!sfxEnabled) return;
+      try {
+        initAudioContext();
+        if (!audioCtx) return;
+
+        const now = audioCtx.currentTime;
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+
+        if (type === 'click') {
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(620, now);
+          osc.frequency.exponentialRampToValueAtTime(140, now + 0.035);
+          gain.gain.setValueAtTime(0.03, now);
+          gain.gain.linearRampToValueAtTime(0.001, now + 0.035);
+          osc.start(now);
+          osc.stop(now + 0.035);
+        } else if (type === 'hover') {
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(280, now);
+          osc.frequency.exponentialRampToValueAtTime(420, now + 0.04);
+          gain.gain.setValueAtTime(0.015, now);
+          gain.gain.linearRampToValueAtTime(0.001, now + 0.04);
+          osc.start(now);
+          osc.stop(now + 0.04);
+        } else if (type === 'notify') {
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(520, now);
+          osc.frequency.exponentialRampToValueAtTime(880, now + 0.09);
+          gain.gain.setValueAtTime(0.04, now);
+          gain.gain.linearRampToValueAtTime(0.001, now + 0.09);
+          osc.start(now);
+          osc.stop(now + 0.09);
+        }
+      } catch (err) {
+        console.warn("Audio error:", err);
+      }
+    }
+
+    function toggleAudio() {
+      sfxEnabled = !sfxEnabled;
+      const icon = document.getElementById('audio-icon');
+      if (icon) {
+        if (sfxEnabled) {
+          icon.setAttribute('data-lucide', 'volume-2');
+          showToast("AUDIO ACTIVE", "Editorial Web Audio synthesized cues enabled.");
+          playSound('notify');
+        } else {
+          icon.setAttribute('data-lucide', 'volume-x');
+          showToast("AUDIO MUTED", "All synthesized audio muted.");
+        }
+        if (window.lucide) window.lucide.createIcons();
+      }
+    }
+
+    /* =========================================================
+       2. INGAMANA SIGNATURE FLOATING CURSOR & IMAGE FOLLOWER
+       ========================================================= */
+    const cursorDot = document.getElementById('cursor-dot');
+    const previewFollower = document.getElementById('project-preview-follower');
+    const previewFollowerImg = document.getElementById('preview-follower-img');
+    const previewFollowerTitle = document.getElementById('preview-follower-title');
+    const previewFollowerTech = document.getElementById('preview-follower-tech');
+
+    let mouseX = 0, mouseY = 0;
+    let currentX = 0, currentY = 0;
+
+    window.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+
+      if (cursorDot) {
+        cursorDot.style.left = `${mouseX}px`;
+        cursorDot.style.top = `${mouseY}px`;
+      }
+    });
+
+    // Smooth lerp loop for the image follower
+    function renderFollower() {
+      // 0.15 lerp damping
+      currentX += (mouseX - currentX) * 0.15;
+      currentY += (mouseY - currentY) * 0.15;
+
+      if (previewFollower) {
+        // Offset slightly to the bottom right of cursor
+        previewFollower.style.left = `${currentX + 180}px`;
+        previewFollower.style.top = `${currentY}px`;
+      }
+      requestAnimationFrame(renderFollower);
+    }
+    requestAnimationFrame(renderFollower);
+
+    // Project table row hover events
+    const projectRows = document.querySelectorAll('.project-row');
+    projectRows.forEach(row => {
+      row.addEventListener('mouseenter', () => {
+        const title = row.getAttribute('data-title');
+        const tech = row.getAttribute('data-tech');
+        const img = row.getAttribute('data-img');
+
+        if (previewFollower && previewFollowerImg) {
+          previewFollowerImg.src = img;
+          previewFollowerTitle.textContent = title;
+          previewFollowerTech.textContent = tech;
+          previewFollower.classList.remove('hidden');
+          previewFollower.style.opacity = '1';
+        }
+        playSound('hover');
+      });
+
+      row.addEventListener('mouseleave', () => {
+        if (previewFollower) {
+          previewFollower.style.opacity = '0';
+          setTimeout(() => {
+            if (previewFollower.style.opacity === '0') {
+              previewFollower.classList.add('hidden');
+            }
+          }, 200);
+        }
+      });
+    });
+
+    /* =========================================================
+       3. PROJECT DATABASE & MODAL INSPECTOR
+       ========================================================= */
+    const projectData = {
+      inamigo: {
+        index: "[01] // NGO CLIENT DEPLOYMENT",
+        title: "InAmigo Foundation",
+        tagline: "Official Non-Profit Portal & Community Outreach Experience",
+        img: "https://images.unsplash.com/photo-1593113598332-cd288d649433?q=80&w=900&auto=format&fit=crop",
+        body: `
+          <p><strong>Context &amp; Mandate:</strong> During my official internship at InAmigo Foundation, I was tasked with engineering the organization's public-facing digital platform to showcase social welfare initiatives, organize donation pipelines, and drive youth volunteer onboarding.</p>
+          <p><strong>Architecture &amp; Solutions:</strong> Structured utilizing clean, semantic HTML5 and fluid CSS3 Grid systems. Replaced fixed-width legacy containers with adaptive units and implemented lightweight image asset formatting to ensure instantaneous mobile rendering even across constrained cellular networks.</p>
+          <p><strong>Internship Outcome:</strong> Delivered the complete production interface on schedule, receiving endorsement from organizational directors for usability, zero third-party dependencies, and reliable cross-browser consistency.</p>
+        `,
+        tags: ["Semantic HTML5", "CSS3 Grid", "Mobile First", "Cross-Browser", "Accessibility"],
+        link: "https://github.com/AdityaSingh800"
+      },
+      githubfinder: {
+        index: "[02] // OCTOKIT API APPLICATION",
+        title: "GitHub Dev Finder",
+        tagline: "Real-time Profile & Repository Intelligence System",
+        img: "https://images.unsplash.com/photo-1618401471353-b98aedd04e11?q=80&w=900&auto=format&fit=crop",
+        body: `
+          <p><strong>Context &amp; Mandate:</strong> Built to empower recruiters and peer engineers with an instantaneous, query-driven interface to evaluate public repositories, contribution velocity, stars, and follower counts without navigating full GitHub desktop views.</p>
+          <p><strong>Architecture &amp; Solutions:</strong> Consumes GitHub's public REST API v3 using asynchronous Fetch workflows. Built with strict input sanitization, dynamic card rendering, empty search defensive fallbacks, and intuitive tabular data visualization.</p>
+        `,
+        tags: ["GitHub API v3", "Async JavaScript", "Dynamic DOM", "Search Debounce"],
+        link: "https://github.com/AdityaSingh800"
+      },
+      weather: {
+        index: "[03] // GEOSPATIAL WEATHER DASHBOARD",
+        title: "Weather Radar Core",
+        tagline: "Real-time Atmospheric Meteorological Dashboard",
+        img: "https://images.unsplash.com/photo-1592210454359-9043f067919b?q=80&w=900&auto=format&fit=crop",
+        body: `
+          <p><strong>Context &amp; Mandate:</strong> Meteorological web application retrieving live ambient temperature, humidity indexes, wind vectors, and forecasts based on dynamic city parameters.</p>
+          <p><strong>Architecture &amp; Solutions:</strong> Connected to OpenWeatherMap REST endpoints. Features async/await promise chains, try/catch defensive fault mitigation for misspelled or non-existent geographic locations, and dynamic CSS condition switching.</p>
+        `,
+        tags: ["RESTful API", "Async/Await", "JSON Serialization", "Error Boundaries"],
+        link: "https://github.com/AdityaSingh800"
+      },
+      todo: {
+        index: "[04] // STATE ENGINE UTILITY",
+        title: "Task Matrix & To-Do",
+        tagline: "Persistent Browser Task Management & State Suite",
+        img: "https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?q=80&w=900&auto=format&fit=crop",
+        body: `
+          <p><strong>Context &amp; Mandate:</strong> A high-performance productivity tool engineered to manage mission-critical objectives with complete client-side data safety and zero cloud lag.</p>
+          <p><strong>Architecture &amp; Solutions:</strong> Developed around browser <code>window.localStorage</code> serialization. Integrates centralized event delegation on parent containers, active/completed status filtering, and defensive XSS protection.</p>
+        `,
+        tags: ["LocalStorage CRUD", "Event Delegation", "Vanilla JS", "DOM Architecture"],
+        link: "https://github.com/AdityaSingh800"
+      },
+      quiz: {
+        index: "[05] // KINETIC ASSESSMENT ENGINE",
+        title: "JavaScript Quiz Master",
+        tagline: "Kinetic Technical Assessment & Evaluation System",
+        img: "https://images.unsplash.com/photo-1606326608606-aa0b62935f2b?q=80&w=900&auto=format&fit=crop",
+        body: `
+          <p><strong>Context &amp; Mandate:</strong> Interactive evaluation platform created to benchmark technical JavaScript knowledge under time constraints.</p>
+          <p><strong>Architecture &amp; Solutions:</strong> Formulated as a finite-state machine. Randomized question shuffling via Fisher-Yates array permutation, running score tallies, immediate correctness styling, and final performance analytics summaries.</p>
+        `,
+        tags: ["State Machines", "Array Shuffling", "Timed Intervals", "Vanilla ES6+"],
+        link: "https://github.com/AdityaSingh800"
+      },
+      portfolio: {
+        index: "[06] // EDITORIAL DIGITAL IDENTITY",
+        title: "Editorial Portfolio Core",
+        tagline: "Awwwards-Caliber Minimalist Developer Showcase",
+        img: "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?q=80&w=900&auto=format&fit=crop",
+        body: `
+          <p><strong>Context &amp; Mandate:</strong> An avant-garde personal engineering platform modeled after Ingamana.com's minimalist, high-contrast aesthetic to secure premier software engineering internships.</p>
+          <p><strong>Architecture &amp; Solutions:</strong> Engineered in a unified, single-file architecture with Space Grotesk and JetBrains Mono typography, interactive cursor-following project previewers, synthesized Web Audio haptic feedback, and continuous deployment via Vercel.</p>
+        `,
+        tags: ["Editorial UI", "Space Grotesk", "Web Audio API", "Vercel Hosting"],
+        link: "https://portfolio-aditya-3654.vercel.app/"
+      }
+    };
+
+    function openProjectModal(key) {
+      const data = projectData[key];
+      if (!data) return;
+
+      document.getElementById('modal-idx').textContent = data.index;
+      document.getElementById('modal-title').textContent = data.title;
+      document.getElementById('modal-tagline').textContent = data.tagline;
+      document.getElementById('modal-img').src = data.img;
+      document.getElementById('modal-body').innerHTML = data.body;
+
+      const tagsContainer = document.getElementById('modal-tags');
+      tagsContainer.innerHTML = '';
+      data.tags.forEach(tag => {
+        const span = document.createElement('span');
+        span.className = 'px-2.5 py-1 text-[11px] font-mono border border-white/20 bg-noir-850 text-zinc-300 rounded';
+        span.textContent = tag;
+        tagsContainer.appendChild(span);
+      });
+
+      const actionBtn = document.getElementById('modal-action-btn');
+      actionBtn.href = data.link;
+
+      document.getElementById('project-modal').classList.remove('hidden');
+      document.getElementById('project-modal').classList.add('flex');
+      playSound('click');
+      if (window.lucide) window.lucide.createIcons();
+    }
+
+    function closeProjectModal() {
+      const modal = document.getElementById('project-modal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+      playSound('click');
+    }
+
+    /* =========================================================
+       4. CONTACT OVERLAY & TOAST NOTIFICATIONS
+       ========================================================= */
+    function toggleContactOverlay(show) {
+      const overlay = document.getElementById('contact-overlay');
+      if (show) {
+        overlay.classList.remove('hidden');
+        overlay.classList.add('flex');
+        document.body.style.overflow = 'hidden';
+        playSound('notify');
+      } else {
+        overlay.classList.add('hidden');
+        overlay.classList.remove('flex');
+        document.body.style.overflow = '';
+        playSound('click');
+      }
+      if (window.lucide) window.lucide.createIcons();
+    }
+
+    let toastTimer;
+    function showToast(title, desc) {
+      const toast = document.getElementById('toast');
+      document.getElementById('toast-title').textContent = title;
+      document.getElementById('toast-desc').textContent = desc;
+
+      toast.classList.remove('hidden');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        toast.classList.add('hidden');
+      }, 4000);
+    }
+
+    function copyEmail() {
+      const email = 'adityanew12id@gmail.com';
+      const tempInput = document.createElement('input');
+      tempInput.value = email;
+      document.body.appendChild(tempInput);
+      tempInput.select();
+      document.execCommand('copy');
+      document.body.removeChild(tempInput);
+
+      showToast("COPIED TO CLIPBOARD", "adityanew12id@gmail.com ready to paste.");
+      playSound('notify');
+    }
+
+    function handleFormSubmit(e) {
+      e.preventDefault();
+      const name = document.getElementById('form-name').value;
+      const email = document.getElementById('form-email').value;
+
+      showToast("TRANSMISSION DISPATCHED", `Thank you, ${name}. Aditya will reply to ${email} promptly.`);
+      playSound('notify');
+      document.getElementById('contact-form').reset();
+      setTimeout(() => {
+        toggleContactOverlay(false);
+      }, 1800);
+    }
+
+    /* =========================================================
+       5. LIVE STUDIO CLOCK & KEYBOARD SHORTCUTS
+       ========================================================= */
+    function updateStudioClock() {
+      const clockEl = document.getElementById('live-time');
+      if (!clockEl) return;
+      const now = new Date();
+      clockEl.textContent = 'PATNA ' + now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }) + ' IST';
+    }
+    setInterval(updateStudioClock, 1000);
+    updateStudioClock();
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeProjectModal();
+        toggleContactOverlay(false);
+      }
+    });
+
+    window.addEventListener('DOMContentLoaded', () => {
+      if (window.lucide) {
+        window.lucide.createIcons();
+      }
+    });
+  </script>
 </body>
-
 </html>
